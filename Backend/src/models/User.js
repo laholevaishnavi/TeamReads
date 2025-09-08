@@ -27,12 +27,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required"],
     minlength: [6, "Password must be at least 6 characters long"],
+    // select: false,
     validate: {
-      validator: (value) => validator.isStrongPassword(value, { minSymbols: 0 }),
+      validator: (value) => validator.isStrongPassword(value, { minSymbols: 1 }),
       message: "Password must contain uppercase, lowercase, number, and be at least 6 characters",
     },
   },
 }, { timestamps: true });
 
-// export default mongoose.model("User", userSchema);
-export const User = mongoose.model("User" , userSchema)
+
+// User delete honyachya adhi ha code run hoil
+userSchema.pre('deleteOne', { document: true, query: false }, async function(next) {
+  console.log(`User ${this._id} is being deleted. Deleting their links...`);
+  // Hya user ne banavlele sagale links delete kara
+  await Link.deleteMany({ userId: this._id });
+  next();
+});
+
+export default mongoose.model("User", userSchema);

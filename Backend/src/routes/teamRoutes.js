@@ -1,24 +1,17 @@
-// import express from "express";
-// import { createTeam, joinTeam, getTeam } from "../controllers/teamController.js";
-// const router = express.Router();
-
-// router.post("/create", createTeam);
-// router.post("/join", joinTeam);
-// router.get("/:id", getTeam);
-// router.get('/user/:userId', getUserTeams);
-
-// export default router;
-// routes/teamRoutes.js
-
-
 import express from "express";
-import { createTeam, getUserTeams, joinTeam, getTeam } from "../controllers/teamController.js";
+import { createTeam, getUserTeams, joinTeam, getTeam, leaveTeam } from "../controllers/teamController.js";
+import { protect } from '../middlewares/authMiddleware.js';
+import linkRoutes from './linkRoutes.js'; // Nested routes sathi import kara
 
 const router = express.Router();
 
-router.post("/teams", createTeam);             // create
-router.get("/teams/user/:userId", getUserTeams); //  user teams
-router.post("/teams/join", joinTeam);          // join
-router.get("/teams/:id", getTeam);             // get single team
+// Nested route: /api/teams/:teamId/links sathi linkRoutes la redirect kara
+router.use('/:teamId/links', linkRoutes);
+
+router.get("/", protect, getUserTeams); 
+router.post("/", protect, createTeam);
+router.get("/:teamId", protect, getTeam);
+router.post("/join", protect, joinTeam);
+router.delete("/:teamId/leave", protect, leaveTeam);
 
 export default router;

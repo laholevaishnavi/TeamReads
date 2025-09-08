@@ -1,10 +1,12 @@
-// backend/src/models/Link.js
+import validator from "validator";
 import mongoose from "mongoose";
 
 const linkSchema = new mongoose.Schema({
   url: {
     type: String,
     required: [true, "URL is required"],
+    trim: true,
+    validate: [validator.isURL, "Please provide a valid URL"],
   },
   title: {
     type: String,
