@@ -7,5 +7,4 @@
 </template>
 
 <script setup>
-// Ha file ata purna ahe.
 </script>

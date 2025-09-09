@@ -36,10 +36,8 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-// User delete honyachya adhi ha code run hoil
 userSchema.pre('deleteOne', { document: true, query: false }, async function(next) {
   console.log(`User ${this._id} is being deleted. Deleting their links...`);
-  // Hya user ne banavlele sagale links delete kara
   await Link.deleteMany({ userId: this._id });
   next();
 });

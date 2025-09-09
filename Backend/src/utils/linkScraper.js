@@ -28,7 +28,7 @@ function normalizeImageUrl(imageUrl, pageUrl) {
 export const scrapeLinkMetadata = async (url) => {
   // 1. Fetch the HTML content from the URL
   const response = await axios.get(url, {
-    timeout: 15000, // Thoda jast timeout thevne changle
+    timeout: 15000, 
     headers: {
       "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",

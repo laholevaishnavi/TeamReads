@@ -16,12 +16,23 @@
             {{ link.description }}
           </v-card-text>
           <v-card-actions class="pa-0 mt-3">
-            <v-avatar size="24" class="mr-2">
-              <span class="text-caption">{{ link.userId.firstName.charAt(0) }}</span>
-            </v-avatar>
-            <span class="text-body-2 text-grey-darken-1">
-              Shared by {{ link.userId.firstName }}
-            </span>
+            <div v-if="link.postedBy === 'bot'" class="d-flex align-center">
+              <v-avatar size="24" class="mr-2" color="blue-grey-lighten-4">
+                 <v-icon size="small">mdi-robot-outline</v-icon>
+              </v-avatar>
+              <span class="text-body-2 text-grey-darken-1">
+                Suggested by NewsBot
+              </span>
+            </div>
+
+            <div v-else class="d-flex align-center">
+               <v-avatar size="24" class="mr-2">
+                 <span class="text-caption">{{ link.userId.firstName.charAt(0) }}</span>
+               </v-avatar>
+               <span class="text-body-2 text-grey-darken-1">
+                 Shared by {{ link.userId.firstName }}
+               </span>
+            </div>
             <v-spacer></v-spacer>
             <v-btn
               icon="mdi-delete-outline"

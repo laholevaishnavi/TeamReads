@@ -3,20 +3,18 @@ import express from "express";
 import { addLink, getLinks, deleteLink } from "../controllers/linkController.js";
 import { protect } from '../middlewares/authMiddleware.js';
 
-// He router 'mergeParams: true' sobat banva
-// jeणेकरून te parent route (teamId) cha parameter access karu shakel
 const router = express.Router({ mergeParams: true });
 
-// Eka specific team che sagale links 
+// for all links of a specific team
 // GET /api/teams/team123/links
 router.get("/", protect, getLinks);
 
-// Eka specific team madhe navin link add karne
+// for adding new links in a specific team
 // POST /api/teams/team123/links
 router.post("/", protect, addLink);
 
-// Eka specific link la delete karne
+//for deleting a specifi link
 // DELETE /api/links/link456
-router.delete("/:linkId", protect, deleteLink); // Ha route veglya file madhe thevla tari chalel
+router.delete("/:linkId", protect, deleteLink); 
 
 export default router;

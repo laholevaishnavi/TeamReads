@@ -30,6 +30,11 @@ const linkSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+    postedBy: {
+    type: String,
+    enum: ['user', 'NewsBot'], 
+    default: 'user',
+  },
 }, { timestamps: true });
 
 export default mongoose.model("Link", linkSchema);

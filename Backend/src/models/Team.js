@@ -7,6 +7,13 @@ const teamSchema = new mongoose.Schema({
     minlength: [3, "Team name must be at least 3 characters long"],
     trim: true,
   },
+  description: {
+    type: String,
+    required: [true, "Team description is required"],
+    minlength: [40, "Description must be at least 40 words."],
+    trim: true,
+    default: 'No description provided for this team.', // A fallback default
+  },
   code: {
     type: String,
     required: true,
