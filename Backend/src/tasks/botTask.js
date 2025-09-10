@@ -2,8 +2,14 @@ import axios from 'axios';
 import Team from '../models/Team.js';
 import Link from '../models/Link.js';
 import { generateSearchQuery } from '../services/geminiService.js';
+import { getNewsBotId } from '../config/seed.js'; 
 
 export async function findAndPostArticles() {
+    const newsBotId = getNewsBotId(); // fro bot id import
+    if (!newsBotId) {
+        console.log('Bot task cannot run, NewsBot ID not found.');
+        return;
+    }
     console.log('Starting daily bot task...');
     const allTeams = await Team.find({});
 
@@ -29,6 +35,7 @@ export async function findAndPostArticles() {
                     description: articleToPost.description,
                     image: articleToPost.urlToImage,
                     teamId: team._id,
+                    userId: newsBotId,
                     userId: team.members[0],
                     postedBy: 'NewsBot',
                 });

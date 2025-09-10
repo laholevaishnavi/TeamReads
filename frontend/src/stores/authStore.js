@@ -9,6 +9,17 @@ export const useAuthStore = defineStore('auth', {
   }),
 
   actions: {
+    async checkAuthStatus() {
+      try {
+        const response = await apiClient.get('/auth/status');
+        this.user = response.data;
+        this.isAuthenticated = true;
+      } catch (error) {
+        this.user = null;
+        this.isAuthenticated = false;
+      }
+    },
+
     async login(credentials) {
       try {
         const response = await apiClient.post('/auth/login', credentials);

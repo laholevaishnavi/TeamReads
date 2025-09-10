@@ -3,7 +3,7 @@
     <v-container class="d-flex align-center">
       <v-icon color="primary" class="mr-2">mdi-lan</v-icon>
       <v-toolbar-title class="font-weight-bold text-primary">
-        LinkSphere
+        TeamReads
       </v-toolbar-title>
       
       <v-spacer></v-spacer>

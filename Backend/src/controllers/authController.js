@@ -57,3 +57,9 @@ export const logout = async (req, res) => {
 //   res.cookie('token', null, { expires: new Date(Date.now()), });
 //   res.send("Logout Successful!!")
 // }
+
+export const checkStatus = async (req, res) => {
+  // The 'protect' middleware has already run and attached req.user.
+  // If we reach this point, the user is authenticated.
+  res.status(200).json(req.user);
+};

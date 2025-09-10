@@ -1,20 +1,16 @@
-
 import express from "express";
-import { addLink, getLinks, deleteLink } from "../controllers/linkController.js";
+import { addLink, getLinks } from "../controllers/linkController.js";
 import { protect } from '../middlewares/authMiddleware.js';
 
+// This router correctly merges params to get the teamId from its parent route
 const router = express.Router({ mergeParams: true });
 
-// for all links of a specific team
-// GET /api/teams/team123/links
+// GET /api/teams/:teamId/links
 router.get("/", protect, getLinks);
 
-// for adding new links in a specific team
-// POST /api/teams/team123/links
+// POST /api/teams/:teamId/links
 router.post("/", protect, addLink);
 
-//for deleting a specifi link
-// DELETE /api/links/link456
-router.delete("/:linkId", protect, deleteLink); 
+// We have removed the delete route from this file.
 
 export default router;

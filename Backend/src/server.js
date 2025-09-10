@@ -8,7 +8,9 @@ import linkRoutes from "./routes/linkRoutes.js";
 import cookieParser from "cookie-parser"
 import cron from 'node-cron';
 import { findAndPostArticles } from "./tasks/botTask.js";
-import { seedNewsBot } from './config/seed.js'; // 👈 IMPORT
+import { seedNewsBot } from './config/seed.js'; 
+import { protect } from "./middlewares/authMiddleware.js";
+import { deleteLink } from "./controllers/linkController.js";
 
 dotenv.config({ quiet: true });
 const app = express();
@@ -22,7 +24,9 @@ app.use(express.json());
 app.use(cookieParser()); 
 
 // DB
-connectDB();
+connectDB().then(() => {
+  seedNewsBot(); // call seed funtion
+});
 
 
 
@@ -30,6 +34,8 @@ connectDB();
 app.use('/api/auth', authRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/links', linkRoutes);
+
+app.delete('/api/links/:linkId', protect, deleteLink);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

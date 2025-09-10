@@ -60,10 +60,24 @@ export const addLink = async (req, res) => {
 export const getLinks = async (req, res) => {
   try {
     const { teamId } = req.params;
-    const links = await Link.find({ teamId })
+    const { search } = req.query; 
+
+    const filter = { teamId: teamId };
+
+    // If a search term was provided in the URL, add a search condition
+    if (search) {
+      // for the search term. The 'i' makes it case-insensitive.
+      filter.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    // Use our new dynamic 'filter' object in the database query
+    const links = await Link.find(filter)
       .populate({
         path: "userId",
-        select: "firstName lastName email", // for Whos added the Link
+        select: "firstName lastName email",
       })
       .sort({ createdAt: -1 });
 

@@ -15,6 +15,11 @@
         <p class="text-body-1 mt-2 text-grey-darken-1">
           Share and discover links with your team. Use code <strong>{{ teamStore.activeTeam.code }}</strong> to invite others.
         </p>
+
+        <p class="text-body-2 mt-4" style="white-space: pre-wrap;">
+          {{ teamStore.activeTeam.description }}
+        </p>
+        
         <v-divider class="my-8"></v-divider>
 
         <AddLinkForm :team-id="teamId" />
